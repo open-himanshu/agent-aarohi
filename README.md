@@ -1,47 +1,29 @@
 # Agent Aarohi
 
-Aarohi is a modular, local-first AI agent for carrying out goal-oriented work through approved tools and specialised skills. It is not a YouTube-only automation script.
+Aarohi is a modular, local-first personal AI agent. WealthCodeX is its first specialist skill, not the entire product.
 
-## Product direction
+## Runtime
+- Windows; Python 3.12 target
+- Modular monolith with SQLite persistence
+- CLI-first; explicitly registered tools
+- Deterministic permission policy outside any language model
+- No unrestricted shell tool, automatic publishing or unattended scheduling
 
-- **Agent identity:** Aarohi
-- **Workspace:** `C:\\PROJECTS\\Agent Aarohi`
-- **Runtime target:** Windows, Python 3.12
-- **Architecture:** modular monolith first; provider- and skill-based extensions
-- **Initial flagship skill:** WealthCodeX content research, production and distribution
-- **Future skills:** added only when designed, tested and permissioned
+## Setup
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -e ".[dev]"
+python -m aarohi init-db
+python -m aarohi about
+python -m pytest
+```
 
-## Agent vs automation
+Set AAROHI_HOME to choose the directory containing the storage folder. By default, the current working directory is used.
 
-A fixed automation executes a predefined pipeline. Aarohi should accept a goal, understand the context, make a plan, select tools/skills, execute bounded steps, inspect results, recover from safe failures and report what happened. It must not invent success or silently exceed granted permissions.
+## Current capability
+Aarohi can accept a goal, persist it as a planned task, list and inspect task records, and enforce a small deterministic risk policy. It does not yet autonomously reason, call an LLM, execute tools or complete submitted tasks.
 
-## Core architecture (planned)
-
-1. **Agent runtime** — task lifecycle, planner/executor loop, cancellation and resumability.
-2. **Tool registry** — discoverable tools with typed input/output contracts.
-3. **Skills** — isolated domain capabilities (WealthCodeX is the first skill, not the whole agent).
-4. **Memory and state** — SQLite initially; explicit separation of task state, user-approved preferences and searchable knowledge.
-5. **Permission and policy layer** — least privilege, risk classification, approval for sensitive actions.
-6. **Audit and recovery** — append-only action history, checkpoints, idempotency and compensating/rollback actions where possible.
-7. **Interfaces** — CLI first; dashboard and remote/mobile control later.
-8. **Providers** — replaceable LLM, speech, media and external-service adapters.
-
-## Safety boundaries
-
-- No secrets in source code, SQLite or logs.
-- No destructive filesystem, OS, financial or account action without appropriate explicit approval.
-- No unrestricted shell execution as the default tool.
-- Keep a human-visible audit trail; report uncertainty and failures.
-- External publishing is gated by factual, licensing, quality and platform-policy checks.
-- Do not enable unattended schedules until the worker, recovery and monitoring paths pass tests.
-
-## First milestone
-
-Build and test the agent foundation before expanding the WealthCodeX skill: configuration, structured logging, SQLite, task/job state machine, tool contracts, permission checks, audit events and CLI. Then verify the existing Phase 1 starter files before integrating or changing them.
-
-## Current status
-
-- Workspace directory created.
-- No application code has been copied or executed in this folder yet.
-- Python 3.12 and GitHub repository setup remain to be verified.
-- Publishing and unattended scheduling remain disabled.
+## Next
+Implement planner/executor contracts, tool invocation with policy enforcement, recovery, and the WealthCodeX skill. External publishing remains disabled until its quality and policy gates pass.

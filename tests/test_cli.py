@@ -1,6 +1,5 @@
 from aarohi.cli import main
 
-
 def test_about_command(capsys):
     main([])
     captured = capsys.readouterr()
