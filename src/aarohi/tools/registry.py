@@ -1,7 +1,10 @@
 """Registry for explicitly implemented tools."""
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any
+
 from aarohi.security.policy import Risk
+
 
 @dataclass(frozen=True)
 class ToolSpec:

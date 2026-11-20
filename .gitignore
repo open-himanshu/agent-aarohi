@@ -12,3 +12,6 @@ storage/*
 dist/
 build/
 *.egg-info/
+
+# Runtime logs
+logs/

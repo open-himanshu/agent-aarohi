@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 from enum import StrEnum
 
+
 class Risk(StrEnum):
     READ = "read"
     REVERSIBLE = "reversible"
